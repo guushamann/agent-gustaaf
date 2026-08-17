@@ -7,6 +7,15 @@ import { tools } from './tools';
 
 const redis = new Redis();
 
+export async function initSubscriptionUserMessages(threadId: string) {
+  redis.subscribe(`user_messages:${threadId}`, (err) => {
+    if (err) console.error(err);
+  });
+  redis.on('message', (channel, message) => {
+    runAgentStep(threadId, message)
+  });
+}
+
 export async function runAgentStep(threadId: string, userInput?: string) {
   // 1. Load conversation state
   const state = await loadState(threadId);
@@ -24,8 +33,8 @@ export async function runAgentStep(threadId: string, userInput?: string) {
       state.messages.push({ role: 'user', content: userInput });
     }
     state.status = 'RUNNING';
-    state.pendingRequestId = undefined;
-    state.pendingToolCallId = undefined;
+    state.pendingRequestId = "";
+    state.pendingToolCallId = "";
   }
 
   // 2. Execute LLM loop

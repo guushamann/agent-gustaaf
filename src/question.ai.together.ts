@@ -79,6 +79,5 @@ export async function questionWithToolTogetherAi(messages: Array<ChatCompletionM
 
     });
 
-  return simpleExtract.choices[0].message
-
+  return simpleExtract.choices[0]?.message;
 }
