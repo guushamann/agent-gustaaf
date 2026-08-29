@@ -14,7 +14,8 @@
   "description": "",
   "dependencies": {
     "@spider-rs/spider-rs": "^0.0.163",
-    "@xberg-io/html-to-markdown": "^3.10.6",
+    "@spider-rs/spider-rs-linux-x64-gnu": "^0.0.157",
+    "@xberg-io/html-to-markdown": "^3.11.5",
     "dotenv": "^17.4.2",
     "esbuild": "^0.28.2",
     "express": "^5.2.1",
