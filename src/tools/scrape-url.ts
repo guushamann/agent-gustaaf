@@ -1,5 +1,33 @@
 import { Website } from "@spider-rs/spider-rs";
 
+const MAX_CONTENT_LENGTH = 4000;
+
+function extractTextFromHtml(html: string): string {
+  let text = html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, " ")
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, " ")
+    .replace(/<nav\b[^<]*(?:(?!<\/nav>)<[^<]*)*<\/nav>/gi, " ")
+    .replace(/<footer\b[^<]*(?:(?!<\/footer>)<[^<]*)*<\/footer>/gi, " ")
+    .replace(/<header\b[^<]*(?:(?!<\/header>)<[^<]*)*<\/header>/gi, " ")
+    .replace(/<aside\b[^<]*(?:(?!<\/aside>)<[^<]*)*<\/aside>/gi, " ")
+    .replace(/<noscript\b[^<]*(?:(?!<\/noscript>)<[^<]*)*<\/noscript>/gi, " ");
+
+  text = text.replace(/<\/(p|div|h[1-6]|li|tr|td|th|section|article|main)>/gi, "\n");
+  text = text.replace(/<[^>]+>/g, " ");
+  text = text
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&ndash;/g, "–")
+    .replace(/&mdash;/g, "—")
+    .replace(/&hellip;/g, "…");
+
+  return text.replace(/\s+/g, " ").trim();
+}
+
 export function scrapeUrl(url: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const website = new Website(url)
@@ -11,7 +39,12 @@ export function scrapeUrl(url: string): Promise<string> {
       if (_err) {
         reject(_err);
       } else {
-        resolve(page.content);
+        const text = extractTextFromHtml(page.content);
+        resolve(
+          text.length > MAX_CONTENT_LENGTH
+            ? `${text.slice(0, MAX_CONTENT_LENGTH)}\n\n[Content truncated]`
+            : text,
+        );
       }
     });
   });

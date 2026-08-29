@@ -107,7 +107,7 @@ export const tools: Array<ChatCompletionTool> = [
     type: "function",
     function: {
       name: "scrape_url",
-      description: "Fetch a URL and return the page content.",
+      description: "Fetch a URL and return the extracted page text (truncated if very long).",
       parameters: {
         type: "object",
         properties: {

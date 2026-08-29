@@ -68,12 +68,12 @@ export async function SimpleQuestionTogetherAi(question: string, systemContent:s
 }
 
 export async function questionWithToolTogetherAi(messages: Array<ChatCompletionMessageParam>, systemContent: string, tools: any) : Promise<ChatCompletionMessage | undefined> {
-  if (systemContent) {
-    messages.unshift({ role: "system", content: systemContent });
-  }
+  const requestMessages = systemContent
+    ? [{ role: "system", content: systemContent } as ChatCompletionMessageParam, ...messages]
+    : messages;
 
   const simpleExtract = await together.chat.completions.create({
-    messages,
+    messages: requestMessages,
     tools,
     model: "Qwen/Qwen3.5-9B",
 
