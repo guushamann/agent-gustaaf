@@ -8,7 +8,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM node:18-slim
+FROM node:22-slim
 
 WORKDIR /app
 
