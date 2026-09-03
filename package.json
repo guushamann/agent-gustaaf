@@ -14,7 +14,6 @@
   "description": "",
   "dependencies": {
     "@spider-rs/spider-rs": "^0.0.163",
-    "@spider-rs/spider-rs-linux-x64-gnu": "^0.0.157",
     "@xberg-io/html-to-markdown": "^3.11.5",
     "dotenv": "^17.4.2",
     "esbuild": "^0.28.2",
@@ -22,6 +21,11 @@
     "ioredis": "^6.0.0",
     "together-ai": "^0.49.0",
     "zod": "^4.4.3"
+  },
+  "optionalDependencies": {
+    "@spider-rs/spider-rs-linux-x64-gnu": "^0.0.157",
+    "@spider-rs/spider-rs-linux-arm64-gnu": "^0.0.157",
+    "@spider-rs/spider-rs-darwin-arm64": "^0.0.157"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
