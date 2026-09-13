@@ -3,9 +3,26 @@ services:
     build: .
     ports:
       - "3000:3000"
+    environment:
+      - REDIS_URL=redis://redis:6379
     volumes:
       - agent-keys-data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     restart: unless-stopped
 
 volumes:
   agent-keys-data:
+  redis-data:

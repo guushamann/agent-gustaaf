@@ -1,7 +1,7 @@
 import Redis from "ioredis";
 import express from "express";
 import { initSubscriptionUserMessages, runAgentStep } from "./agent";
-const redis = new Redis();
+const redis = new Redis(process.env.REDIS_URL || "redis://localhost:6379");
 export function setupTransport(app: express.Express) {
   // Express SSE Endpoint
   app.get('/api/threads/:threadId/stream', async (req, res) => {
