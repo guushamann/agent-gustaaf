@@ -2,15 +2,18 @@ import { Redis } from 'ioredis';
 import { randomUUID } from 'node:crypto';
 import { ChatCompletionMessageParam } from 'together-ai/resources/chat/completions.mjs';
 import { loadState, saveState } from './agentState';
+import { redis as publisher } from './agentStateServer';
 import { AgentEvent } from './agentEvent';
 import { callLLM } from './agentCallLlm';
 import { tools, toolHandlers } from './tools';
 import { parseXmlToolCalls } from './xmlToolCallParser';
 
-const redis = new Redis();
+// Dedicated subscriber connection; publishing must go through `publisher`
+// because a subscribed Redis client cannot issue other commands
+const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 
 function publishEvent(threadId: string, event: AgentEvent) {
-  redis.publish(`thread:${threadId}`, JSON.stringify(event));
+  publisher.publish(`thread:${threadId}`, JSON.stringify(event));
 }
 
 export async function initSubscriptionUserMessages(threadId: string) {

@@ -79,7 +79,12 @@ export function ThreadDebugger() {
         )}
       </div>
 
-      <form onSubmit={handleSend} className="flex gap-2 border-t border-slate-200 bg-white p-4">
+      <form onSubmit={handleSend} className="flex flex-col gap-2 border-t border-slate-200 bg-white p-4">
+        {sendMessage.error && (
+          <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+            {String(sendMessage.error)}
+          </div>
+        )}
         <input
           type="text"
           value={draft}
