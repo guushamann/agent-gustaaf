@@ -5,7 +5,11 @@ app.use(express.json());
 const port = 3000;
 
 import { setupTransport } from "./transport";
+import { setupAdmin } from "./admin";
+import { requireApiKey } from "./auth";
 
+setupAdmin(app);
+app.use("/api", requireApiKey);
 setupTransport(app);
 
 app.listen(port, () => {

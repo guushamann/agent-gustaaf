@@ -75,7 +75,7 @@ export async function questionWithToolTogetherAi(messages: Array<ChatCompletionM
   const simpleExtract = await together.chat.completions.create({
     messages: requestMessages,
     tools,
-    model: "Qwen/Qwen3.5-9B",
+    model: "zai-org/GLM-5.3-Flash",
 
     });
 

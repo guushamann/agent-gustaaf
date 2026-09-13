@@ -15,6 +15,7 @@
   "dependencies": {
     "@spider-rs/spider-rs": "^0.0.163",
     "@xberg-io/html-to-markdown": "^3.11.5",
+    "better-sqlite3": "^13.0.3",
     "dotenv": "^17.4.2",
     "esbuild": "^0.28.2",
     "express": "^5.2.1",
@@ -23,14 +24,19 @@
     "zod": "^4.4.3"
   },
   "optionalDependencies": {
-    "@spider-rs/spider-rs-linux-x64-gnu": "^0.0.157",
+    "@spider-rs/spider-rs-darwin-arm64": "^0.0.157",
     "@spider-rs/spider-rs-linux-arm64-gnu": "^0.0.157",
-    "@spider-rs/spider-rs-darwin-arm64": "^0.0.157"
+    "@spider-rs/spider-rs-linux-x64-gnu": "^0.0.157"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
     "@types/express": "^5.0.6",
     "@types/node": "^26.2.0",
     "typescript": "^7.0.2",
     "vite": "^8.2.1"
+  },
+  "allowScripts": {
+    "better-sqlite3@13.0.3": true,
+    "esbuild@0.28.2": true
   }
 }
